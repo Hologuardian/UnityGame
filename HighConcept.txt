@@ -1,0 +1,4 @@
+I'm planning on making a first person mech game. The player will control a large robot capable of large amounts of destruction.
+The UI will be as simple as possible, with targeting being a simple hover and will abstract icons representing ammunition and hull integrity.
+Destructible objects as well as large terrain maps with AI enemies for the player to destroy.
+Weapon customization and loadouts for mechs.
