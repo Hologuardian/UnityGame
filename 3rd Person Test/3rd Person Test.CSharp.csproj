@@ -74,7 +74,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Make8x8Wall.cs" />
+    <Compile Include="Assets\Scripts\ExplodePhysics.cs" />
+    <Compile Include="Assets\Scripts\MakeWall.cs" />
+    <Compile Include="Assets\Scripts\MoveToTarget.cs" />
+    <Compile Include="Assets\Scripts\ParticleCollision.cs" />
+    <Compile Include="Assets\Scripts\ProjectileHit.cs" />
+    <Compile Include="Assets\Scripts\Rebuild.cs" />
+    <Compile Include="Assets\Scripts\Target.cs" />
     <Compile Include="Assets\Scripts\TestScript.cs" />
   </ItemGroup>
   <ItemGroup>
