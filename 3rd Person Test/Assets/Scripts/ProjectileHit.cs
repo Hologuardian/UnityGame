@@ -5,7 +5,7 @@ public class ProjectileHit : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        gameObject.GetComponent<Collider>().tag = "Projectile";
 	}
 	
 	// Update is called once per frame
@@ -16,10 +16,12 @@ public class ProjectileHit : MonoBehaviour {
     public GameObject explosionPrefab;
     public float ExplosionStrength = 2000.0f;
     public float ExplosionSize = 5.0f;
+    public float ExplosionDeathTimer = 1.0f;
+    public float ProjectileDeathTimer = 5.0f;
     void Explode(ContactPoint[] contacts)
     {
         GameObject explosion = Instantiate(explosionPrefab, contacts[0].point, Quaternion.identity) as GameObject;
-        Destroy(explosion, 1.0f);
+        Destroy(explosion, ExplosionDeathTimer);
         
         for (int i = -5; i <= 5; ++i)
         {
@@ -28,16 +30,16 @@ public class ProjectileHit : MonoBehaviour {
                 for (int k = -5; k <= 5; ++k)
                 {
                     RaycastHit hit;
-                    
-                    Physics.Raycast(transform.position, new Vector3(i, j, k), out hit);
+                    Ray ray = new Ray(transform.position, new Vector3(i, j, k));
+                    Physics.Raycast(ray, out hit);
                     Rigidbody body = hit.rigidbody;
                     if (body)
                     {
                         Vector3 direction = body.transform.position - transform.position;
                         direction = direction.normalized;
                         body.AddForce(direction * ExplosionStrength);
-                        if(body.gameObject.tag != "Player")
-                            Destroy(body.gameObject, 1.0f);
+                        //if(body.gameObject.tag != "Player" && body.gameObject.tag != "Projectile")
+                        //    Destroy(body.gameObject, 1.0f);
                     }
                 }
             }
@@ -55,7 +57,7 @@ public class ProjectileHit : MonoBehaviour {
         gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
         gameObject.GetComponent<Renderer>().enabled = false;
-        Destroy(gameObject, 2.0f);
+        Destroy(gameObject, ProjectileDeathTimer);
     }
 
     void OnCollisionEnter(Collision coll)

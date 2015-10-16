@@ -66,6 +66,12 @@
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
     </Reference>
+    <Reference Include="RAIN">
+      <HintPath>Assets\RAIN\RAIN.dll</HintPath>
+    </Reference>
+    <Reference Include="RAINMetaform">
+      <HintPath>Assets\RAIN\RAINMetaform.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="3rd Person Test.CSharp.Plugins.csproj">
@@ -82,8 +88,18 @@
     <Compile Include="Assets\Scripts\Rebuild.cs" />
     <Compile Include="Assets\Scripts\Target.cs" />
     <Compile Include="Assets\Scripts\TestScript.cs" />
+    <Compile Include="Assets\Scripts\TrailDeath.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\RAIN\Editor\ScriptTemplates\BehaviorTreeTemplate.xml" />
+    <None Include="Assets\RAIN\Editor\Shaders\AspectRingShader.shader" />
+    <None Include="Assets\RAIN\Editor\Shaders\AspectSphereShader.shader" />
+    <None Include="Assets\RAIN\Editor\Shaders\NavMeshColliderShader.shader" />
+    <None Include="Assets\RAIN\Editor\Shaders\NavMeshContourShader.shader" />
+    <None Include="Assets\RAIN\Editor\Shaders\VisualSensorLineShader.shader" />
+    <None Include="Assets\RAIN\Editor\Shaders\VisualSensorRingShader.shader" />
+    <None Include="Assets\RAIN\Editor\Shaders\WaypointShader.shader" />
+    <None Include="Assets\RAIN\ReleaseNotes.txt" />
     <None Include="Assets\Standard Assets\Characters\FirstPersonCharacter\FirstPersonCharacterGuidelines.txt" />
     <None Include="Assets\Standard Assets\Characters\RollerBall\RollerBallGuidelines.txt" />
     <None Include="Assets\Standard Assets\Characters\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
