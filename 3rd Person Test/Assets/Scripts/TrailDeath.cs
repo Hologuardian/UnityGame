@@ -27,7 +27,7 @@ public class TrailDeath : MonoBehaviour
 
     void OnCollisionEnter(Collision coll)
     {
-        if (coll.gameObject.GetComponent<ProjectileHit>() != null)
+        if (coll.gameObject.GetComponent<TrailDeath>() != null || coll.gameObject.CompareTag("Player"))
             return; //Basically don't have the projectiles hit each other
         Explode(coll.contacts);
     }

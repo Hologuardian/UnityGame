@@ -80,7 +80,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\BasicEnemyAI.cs" />
     <Compile Include="Assets\Scripts\ExplodePhysics.cs" />
+    <Compile Include="Assets\Scripts\Health.cs" />
     <Compile Include="Assets\Scripts\MakeWall.cs" />
     <Compile Include="Assets\Scripts\MoveToTarget.cs" />
     <Compile Include="Assets\Scripts\ParticleCollision.cs" />
