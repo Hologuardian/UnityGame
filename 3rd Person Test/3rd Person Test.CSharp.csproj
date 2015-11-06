@@ -83,11 +83,15 @@
     <Compile Include="Assets\Scripts\BasicEnemyAI.cs" />
     <Compile Include="Assets\Scripts\ExplodePhysics.cs" />
     <Compile Include="Assets\Scripts\Health.cs" />
+    <Compile Include="Assets\Scripts\HoverOverPlayer.cs" />
     <Compile Include="Assets\Scripts\MakeWall.cs" />
     <Compile Include="Assets\Scripts\MoveToTarget.cs" />
+    <Compile Include="Assets\Scripts\Movement\Rotate.cs" />
     <Compile Include="Assets\Scripts\ParticleCollision.cs" />
+    <Compile Include="Assets\Scripts\PlayerDeath.cs" />
     <Compile Include="Assets\Scripts\ProjectileHit.cs" />
     <Compile Include="Assets\Scripts\Rebuild.cs" />
+    <Compile Include="Assets\Scripts\SwitchScene.cs" />
     <Compile Include="Assets\Scripts\Target.cs" />
     <Compile Include="Assets\Scripts\TestScript.cs" />
     <Compile Include="Assets\Scripts\TrailDeath.cs" />

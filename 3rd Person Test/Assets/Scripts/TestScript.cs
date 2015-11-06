@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class TestScript : MonoBehaviour {
 
@@ -8,10 +9,16 @@ public class TestScript : MonoBehaviour {
     public Rigidbody projectile;
     public string FireKey = "Fire1";
     public bool Automatic = false;
-    public float AutoDelay = 5.0f;
+    public float AutoDelay = 0.5f;
     private float AutoTimer = 0.0f;
     public float Spread = 0.1f;
     public bool IsAI = false;
+    public Transform targeting;
+    public Slider heatSlider;
+    private float heat;
+    private bool overheat = false;
+    public float HeatPerShot = 0.1f;
+    public float HeatPerSecond = 0.5f;
 
 	// Use this for initialization
 	void Start ()
@@ -22,7 +29,22 @@ public class TestScript : MonoBehaviour {
     
     // Update is called once per frame
     void Update () {
-        //This is dusgusting and shouldn't be here
+        if (heatSlider != null)
+        {
+            heatSlider.value = heat;
+            if (heat >= 1)
+            {
+                heatSlider.gameObject.transform.FindChild("Background").GetComponent<Image>().color = Color.yellow;
+                overheat = true;
+                heat = 1;
+            }
+            if (heat <= 0)
+            {
+                heatSlider.gameObject.transform.FindChild("Background").GetComponent<Image>().color = Color.white;
+                overheat = false;
+                heat = 0;
+            }
+        }
         if (!IsAI)
         {
             if (Input.GetKey(KeyCode.Escape))
@@ -33,7 +55,8 @@ public class TestScript : MonoBehaviour {
             //Above is dusgusting and shouldn't be here
             if (!Automatic)
             {
-                if (Input.GetButtonDown(FireKey))
+                heat -= Time.deltaTime * HeatPerSecond;
+                if (Input.GetButtonDown(FireKey) && !overheat)
                 {
                     Shoot();
                 }
@@ -41,10 +64,17 @@ public class TestScript : MonoBehaviour {
             else
             {
                 AutoTimer += Time.deltaTime;
-                if (Input.GetButton(FireKey) && AutoTimer >= AutoDelay)
+                if (Input.GetButton(FireKey) && !overheat)
                 {
-                    AutoTimer = 0;
-                    Shoot();
+                    if(AutoTimer >= AutoDelay)
+                    {
+                        AutoTimer = 0;
+                        Shoot();
+                    }
+                }
+                else
+                {
+                    heat -= Time.deltaTime * HeatPerSecond;
                 }
             }
         }
@@ -54,8 +84,19 @@ public class TestScript : MonoBehaviour {
     {
         for (int i = 0; i < Shots; ++i)
         {
+            heat += HeatPerShot;
             //Debug.Log(transform.rotation.x + " " + transform.rotation.y + "" + transform.rotation.z + " " + transform.rotation.w);
+            RaycastHit hit;
+            Physics.Raycast(targeting.position, targeting.forward, out hit);
+            if (hit.point != null)
+            {
+                transform.LookAt(hit.point);
+            }
             Rigidbody instantiateProjectile = Instantiate(projectile, transform.position, transform.rotation) as Rigidbody;
+            if(IsAI)
+            {
+                instantiateProjectile.gameObject.tag = "AIProjectile";
+            }
             Vector3 sped = Random.insideUnitSphere * (speed * Spread);
             Debug.Log("Spread Vector: " + sped + " Speed: " + speed);
             instantiateProjectile.velocity = transform.TransformDirection(0 + sped.x, 0 + sped.y, speed);

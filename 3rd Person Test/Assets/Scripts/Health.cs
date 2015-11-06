@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Health : MonoBehaviour {
 
     public float HP;
+    public Text text;
+    public bool isAI = true;
 	// Use this for initialization
 	void Start ()
     {
@@ -14,17 +17,28 @@ public class Health : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        if (text != null)
+        {
+            text.text = "Health: " + HP;
+        }
         if (HP <= 0 && !hasExploded)
         {
             hasExploded = true;
-            gameObject.GetComponent<Renderer>().enabled = false;
-            foreach(Renderer r in gameObject.GetComponentsInChildren<Renderer>())
+            Renderer render = gameObject.GetComponent<Renderer>();
+            if(render != null)
+            {
+                render.enabled = false;
+            }
+            foreach (Renderer r in gameObject.GetComponentsInChildren<Renderer>())
             {
                 r.enabled = false;
             }
 
-            Destroy(gameObject, ProjectileDeathTimer);
-            Explode();
+            Destroy(gameObject, DeathTimer);
+            if(explosionPrefab != null)
+            {
+                Explode();
+            }
         }
 	}
 
@@ -32,7 +46,7 @@ public class Health : MonoBehaviour {
     public float ExplosionStrength = 2000.0f;
     public float ExplosionSize = 5.0f;
     public float ExplosionDeathTimer = 1.0f;
-    public float ProjectileDeathTimer = 5.0f;
+    public float DeathTimer = 5.0f;
     void Explode()
     {
         GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity) as GameObject;
@@ -73,7 +87,15 @@ public class Health : MonoBehaviour {
 
     void OnCollisionEnter(Collision coll)
     {
-        if (coll.gameObject.CompareTag("Projectile"))
+        if (isAI)
+        {
+            if (coll.gameObject.CompareTag("Projectile"))
+            {
+                HP -= 1;
+                return;
+            }
+        }
+        else if (coll.gameObject.CompareTag("AIProjectile"))
         {
             HP -= 1;
             return;
