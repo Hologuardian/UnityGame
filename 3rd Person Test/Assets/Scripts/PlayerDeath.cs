@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(SwitchScene))]
 public class PlayerDeath : MonoBehaviour {
 
 	// Use this for initialization

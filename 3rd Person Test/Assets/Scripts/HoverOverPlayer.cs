@@ -6,6 +6,8 @@ public class HoverOverPlayer : MonoBehaviour {
 
     public Transform player;
     private Vector3 targetPosition;
+    public float floatHeight = 20.0f;
+    public float speed = 20.0f;
 	// Use this for initialization
 	void Start () {
 	
@@ -17,14 +19,18 @@ public class HoverOverPlayer : MonoBehaviour {
         float distance = Vector3.Distance(player.position, transform.position);
         if(distance <= 200.0f)
         {
-            targetPosition = player.position + new Vector3(0, 20.0f, 0);
+            targetPosition = player.position + new Vector3(0, floatHeight, 0);
             //transform.LookAt(targetPosition);
             float toTarget = Vector3.Distance(targetPosition, transform.position);
             if (toTarget >= 0.1)
             {
                 Rigidbody body = gameObject.GetComponent<Rigidbody>();
                 Vector3 targeting = (targetPosition - transform.position);
-                targeting.Normalize();
+                if(targeting.magnitude > 1)
+                {
+                    targeting.Normalize();
+                    targeting *= speed;
+                }
                 body.velocity = targeting;
             }
         }

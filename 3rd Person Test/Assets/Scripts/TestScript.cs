@@ -9,6 +9,7 @@ public class TestScript : MonoBehaviour {
     public Rigidbody projectile;
     public string FireKey = "Fire1";
     public bool Automatic = false;
+    public bool AutoHeatReduction = false;
     public float AutoDelay = 0.5f;
     private float AutoTimer = 0.0f;
     public float Spread = 0.1f;
@@ -19,6 +20,7 @@ public class TestScript : MonoBehaviour {
     private bool overheat = false;
     public float HeatPerShot = 0.1f;
     public float HeatPerSecond = 0.5f;
+    public Collider[] ignore = new Collider[1];
 
 	// Use this for initialization
 	void Start ()
@@ -63,6 +65,11 @@ public class TestScript : MonoBehaviour {
             }
             else
             {
+                if (AutoHeatReduction)
+                {
+                    heat -= Time.deltaTime * HeatPerSecond;
+                }
+
                 AutoTimer += Time.deltaTime;
                 if (Input.GetButton(FireKey) && !overheat)
                 {
@@ -72,7 +79,7 @@ public class TestScript : MonoBehaviour {
                         Shoot();
                     }
                 }
-                else
+                else if(!AutoHeatReduction)
                 {
                     heat -= Time.deltaTime * HeatPerSecond;
                 }
@@ -88,9 +95,14 @@ public class TestScript : MonoBehaviour {
             //Debug.Log(transform.rotation.x + " " + transform.rotation.y + "" + transform.rotation.z + " " + transform.rotation.w);
             RaycastHit hit;
             Physics.Raycast(targeting.position, targeting.forward, out hit);
-            if (hit.point != null)
+            if (hit.point != null && hit.point != Vector3.zero)
             {
                 transform.LookAt(hit.point);
+                //Debug.Log(hit.point);
+            }
+            else
+            {
+                transform.LookAt(transform.position + transform.parent.transform.TransformDirection(Vector3.forward));
             }
             Rigidbody instantiateProjectile = Instantiate(projectile, transform.position, transform.rotation) as Rigidbody;
             if(IsAI)
@@ -98,8 +110,16 @@ public class TestScript : MonoBehaviour {
                 instantiateProjectile.gameObject.tag = "AIProjectile";
             }
             Vector3 sped = Random.insideUnitSphere * (speed * Spread);
-            Debug.Log("Spread Vector: " + sped + " Speed: " + speed);
+            //Debug.Log("Spread Vector: " + sped + " Speed: " + speed);
             instantiateProjectile.velocity = transform.TransformDirection(0 + sped.x, 0 + sped.y, speed);
+            if(ignore != null)
+            {
+                foreach(Collider c in ignore)
+                {
+
+                    Physics.IgnoreCollision(instantiateProjectile.GetComponent<Collider>(), c);
+                }
+            }
             Destroy(instantiateProjectile.gameObject, 30.0f);
         }
     }
