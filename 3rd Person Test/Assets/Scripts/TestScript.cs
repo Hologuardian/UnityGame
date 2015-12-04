@@ -95,7 +95,7 @@ public class TestScript : MonoBehaviour {
             //Debug.Log(transform.rotation.x + " " + transform.rotation.y + "" + transform.rotation.z + " " + transform.rotation.w);
             RaycastHit hit;
             Physics.Raycast(targeting.position, targeting.forward, out hit);
-            if (hit.point != null && hit.point != Vector3.zero)
+            if (hit.collider != null && hit.point != Vector3.zero)
             {
                 transform.LookAt(hit.point);
                 //Debug.Log(hit.point);
@@ -120,7 +120,8 @@ public class TestScript : MonoBehaviour {
                     Physics.IgnoreCollision(instantiateProjectile.GetComponent<Collider>(), c);
                 }
             }
-            Destroy(instantiateProjectile.gameObject, 30.0f);
+            Destroy(instantiateProjectile.gameObject, 10.0f);
+            
         }
     }
 }

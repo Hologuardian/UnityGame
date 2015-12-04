@@ -18,6 +18,7 @@ public class ProjectileHit : MonoBehaviour {
     public float ExplosionSize = 5.0f;
     public float ExplosionDeathTimer = 1.0f;
     public float ProjectileDeathTimer = 5.0f;
+    public float damage = 0.05f;
     void Explode(ContactPoint[] contacts)
     {
         GameObject explosion = Instantiate(explosionPrefab, contacts[0].point, Quaternion.identity) as GameObject;
@@ -33,11 +34,16 @@ public class ProjectileHit : MonoBehaviour {
                     Ray ray = new Ray(transform.position, new Vector3(i, j, k));
                     Physics.Raycast(ray, out hit);
                     Rigidbody body = hit.rigidbody;
-                    if (body)
+                    if (body != null)
                     {
                         Vector3 direction = body.transform.position - transform.position;
                         direction = direction.normalized;
                         body.AddForce(direction * ExplosionStrength);
+                        Health hp = body.gameObject.GetComponent<Health>();
+                        if(hp != null)
+                        {
+                            hp.TakeDamage(damage);
+                        }
                         //if(body.gameObject.tag != "Player" && body.gameObject.tag != "Projectile")
                         //    Destroy(body.gameObject, 1.0f);
                     }

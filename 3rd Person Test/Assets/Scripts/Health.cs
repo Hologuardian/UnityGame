@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class Health : MonoBehaviour {
 
@@ -19,7 +18,7 @@ public class Health : MonoBehaviour {
     {
         if (text != null)
         {
-            text.text = "Health: " + HP;
+            text.text = "Health: " + string.Format("{0:#,###.#0;HP}", HP);
         }
         if (HP <= 0 && !hasExploded)
         {
@@ -91,14 +90,19 @@ public class Health : MonoBehaviour {
         {
             if (coll.gameObject.CompareTag("Projectile"))
             {
-                HP -= 1;
+                TakeDamage(1);
                 return;
             }
         }
         else if (coll.gameObject.CompareTag("AIProjectile"))
         {
-            HP -= 1;
+            TakeDamage(1);
             return;
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        HP -= damage;
     }
 }
