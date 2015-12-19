@@ -50,15 +50,6 @@ public class ProjectileHit : MonoBehaviour {
                 }
             }
         }
-        
-        /*
-        RaycastHit[] hits = Physics.SphereCastAll(transform.position, ExplosionSize, Vector3.zero, 0.0f);
-
-        foreach(RaycastHit hit in hits)
-        {
-            hit.rigidbody.AddExplosionForce(ExplosionStrength, transform.position, ExplosionSize);
-        }
-        */
 
         gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         gameObject.GetComponent<Rigidbody>().isKinematic = true;

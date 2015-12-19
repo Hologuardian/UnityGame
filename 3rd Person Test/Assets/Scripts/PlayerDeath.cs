@@ -11,7 +11,10 @@ public class PlayerDeath : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameObject.gameObject.GetComponent<SwitchScene>().Switch();
+        }
 	}
 
     void OnDestroy()

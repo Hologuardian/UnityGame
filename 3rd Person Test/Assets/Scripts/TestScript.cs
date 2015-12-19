@@ -120,7 +120,7 @@ public class TestScript : MonoBehaviour {
                     Physics.IgnoreCollision(instantiateProjectile.GetComponent<Collider>(), c);
                 }
             }
-            Destroy(instantiateProjectile.gameObject, 10.0f);
+            //Destroy(instantiateProjectile.gameObject, 10.0f);
             
         }
     }
